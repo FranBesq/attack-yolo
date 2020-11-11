@@ -5,4 +5,5 @@ Developing adversarial attacks on YOLO algorithm for computer vision (Work in pr
 # Requirements
 
 Darknet - https://github.com/AlexeyAB/darknet#requirements
+
 OpenCV 3.4
