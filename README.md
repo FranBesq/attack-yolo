@@ -1,9 +1,18 @@
 # attack-yolo
-Developing adversarial attacks on YOLO algorithm for computer vision (Work in progress)
 
+*(Work in progress)*
+
+Developing adversarial attacks on YOLO algorithm for computer vision 
 
 # Requirements
 
-Darknet - https://github.com/AlexeyAB/darknet#requirements
+* Darknet - https://github.com/AlexeyAB/darknet#requirements
 
-OpenCV 3.4
+* OpenCV python
+
+* NumPy
+
+# Work in progress
+
+* Create an Env to generate adversarial images
+* Fix test
