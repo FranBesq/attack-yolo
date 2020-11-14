@@ -13,6 +13,12 @@ class AttackEnv(gym.Env):
   metadata = {'render.modes': ['human']}
 
   def __init__(self):
+
+    #Anyway, its hardcoded in self._get_obs()
+    self.imgDir = "img/",
+    self.imgName = "senal-stop-416.jpg"
+    self.targetClass = "nstop sign"
+
     super(AttackEnv, self).__init__()
     # Define action and observation space
     # Action space is also an image
@@ -24,11 +30,42 @@ class AttackEnv(gym.Env):
 
   def step(self, action):
     # Execute one time step within the environment
+    reward = 0.0
+    is_class_found = 0
+    class_score = 0
+    imgOr = self._get_obs()
+
+    #Consider the overlay the action
+    utils.mergeImages(imgOr, action)
+    res = utils.detectYolo()
+
+    #Compute reward
+    for detection in res:
+      if self.targetClass in detection:
+        is_class_found += 1
+        #Convert score to int
+        class_score += int(detection[1].replace("%", ""))
+    
+    #Do we care about previous detection?>
+
+    #Focus on not detecting our target class
+    if class_score == 0:
+      reward = 1000
+    #Punish each score point target class got
+    else: 
+      reward -= class_score * 10
+
+    return imgOr, reward, True, {}
+
     ...
   def reset(self):
     # Reset the state of the environment to
+    return self._get_obs()
     
     ...
   def render(self, mode='human', close=False):
     # Render the environment to the screen
     ...
+
+  def _get_obs(self):
+    return cv2.imread("img/senal-stop-416.jpg")

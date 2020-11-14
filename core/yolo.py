@@ -20,12 +20,13 @@ class YOLO(object):
 
         #print("Darknet Output is: " + str(output))
         outputList = str(output).split("\\")
-        detecList = [[None, None]]
+        detecList = [[]]
+        detecList.pop()
         for e in outputList:
             print("Elemento del output: "+str(e))
             #Save detection
             if '%' in str(e):
-                detecList.append(str(e).split())
+                detecList.append(str(e).split(":"))
 
         #print(str(detecList))
         return detecList

@@ -23,7 +23,7 @@ def getRandomImg(width=32, height=32, imgName="adv_img.jpg", save=False):
     
     return img_adv
 
-def mergeImages(imgBack, imgOver, offsetH=150, offsetW=150, save=False, saveName="compImg.jpg"):
+def mergeImages(imgBack, imgOver, offsetH=150, offsetW=150, save=True, saveName="result.jpg"):
     
     overShape = imgOver.shape[:2]
     #Check if offset + sizeOver out of bounds??
