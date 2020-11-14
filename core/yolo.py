@@ -1,8 +1,9 @@
 import os
 import subprocess
+#Your darknet path goes here
 darknetPath = "/home/francisco/TFG/darknet"
 
-class yolo(object):
+class YOLO(object):
 
     def __init__(self, imagePath="data/dog.jpg"):
         self.imagePath = imagePath

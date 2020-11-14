@@ -1,11 +1,12 @@
 #import yolo
 import cv2
-import yolo
+from core import yolo
 import os 
 import numpy as np
 from PIL import Image
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
+#Your image folder path goes here
 img_path = "/home/francisco/Documents/PIC/attack-yolo/img/"
 
 # Returns random image of given size
@@ -18,7 +19,7 @@ def getRandomImg(width=32, height=32, imgName="adv_img.jpg", save=False):
     cv2.randu(bgr[2], 0, 255)
     img_adv = cv2.merge(bgr)
     if save == True:
-        cv2.imwrite(imgName, img_adv)
+        cv2.imwrite(img_path + imgName, img_adv)
     
     return img_adv
 
@@ -30,14 +31,14 @@ def mergeImages(imgBack, imgOver, offsetH=150, offsetW=150, save=False, saveName
     # Copy imgOver on top of imgBack given an offset
     imgBack[offsetH:offsetH+overShape[0], offsetW:offsetW+overShape[1]] = imgOver
     if save == True:
-        cv2.imwrite(saveName, imgBack)
+        cv2.imwrite(img_path + saveName, imgBack)
     
     return imgBack
 
 def detectYolo(imgName = "result.jpg"):
     #Call YOLOv3 Tiny
-    yolo = yolo.yolo(imagePath=img_path + imgName)
-    detection = yolo.getDetection()
+    model = yolo.YOLO(imagePath=img_path + imgName)
+    detection = model.getDetection()
     #print(str(detection))
     return detection
 
