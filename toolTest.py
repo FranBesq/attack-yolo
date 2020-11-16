@@ -13,7 +13,24 @@ def main():
     #Load target image
     imgOriginal = cv2.imread(imgDir + imgName)
 
-    #Create random image
+    #StackOverflow:
+    #  https://stackoverflow.com/questions/43391205/add-padding-to-images-to-get-them-into-the-same-shape
+    
+    ht, wd, cc= imgOriginal.shape
+    ww = 416
+    hh = 416
+    color = (255,255,255)
+    result = np.full((hh,ww,3), color, dtype=np.uint8)
+
+    # compute center offset
+    xx = (ww - wd) // 2
+    yy = (hh - ht) // 2
+
+    result[yy:yy+ht, xx:xx+wd] = imgOriginal
+
+    cv2.imwrite("senal-stop-416x2.jpg", result)
+
+    """#Create random image
     imgAdv = utils.getRandomImg(width=64, height=64, save=True)
     
     #Merge both imgOriginal and imgAdv
@@ -23,7 +40,7 @@ def main():
     detectionsAttck = utils.detectYolo(imgName="imgRes.jpg")
     detectionOr = utils.detectYolo(imgName=imgName)
 
-    print("\nDetections: " + str(detectionsAttck)) 
+    print("\nDetections: " + str(detectionsAttck)) """
 
 
 if __name__ == "__main__":

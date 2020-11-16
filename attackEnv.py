@@ -7,6 +7,8 @@ from gym import spaces
 #Dimensions of input image
 HEIGHT = 416
 WIDTH = 416
+ACTION_H = 64
+ACTION_W = 64
 
 class AttackEnv(gym.Env):
   """Custom Environment for performing adversarial attacks on cnns that follows gym interface"""
@@ -16,14 +18,15 @@ class AttackEnv(gym.Env):
 
     #Anyway, its hardcoded in self._get_obs()
     self.imgDir = "img/",
-    self.imgName = "senal-stop-416.jpg"
+    self.imgName = "senal-stop-416x2.jpg"
     self.targetClass = "nstop sign"
 
     super(AttackEnv, self).__init__()
     # Define action and observation space
     # Action space is also an image
+    #self.action_space = spaces.Discrete(HEIGHT*WIDTH*3)
     self.action_space = spaces.Box(low=0, high=255, shape=
-                    (HEIGHT, WIDTH, 3), dtype=np.uint8)
+                    (ACTION_H * ACTION_W * 3,), dtype=np.uint8)
     # Example for using image as input:
     self.observation_space = spaces.Box(low=0, high=255, shape=
                     (HEIGHT, WIDTH, 3), dtype=np.uint8)
@@ -34,6 +37,9 @@ class AttackEnv(gym.Env):
     is_class_found = 0
     class_score = 0
     imgOr = self._get_obs()
+
+    #Get an image from action vector
+    action = np.reshape(action, (ACTION_H, ACTION_W, 3))
 
     #Consider the overlay the action
     utils.mergeImages(imgOr, action)
@@ -68,4 +74,4 @@ class AttackEnv(gym.Env):
     ...
 
   def _get_obs(self):
-    return cv2.imread("img/senal-stop-416.jpg")
+    return cv2.imread("img/senal-stop-416x2.jpg") #Remove this hardcoded path

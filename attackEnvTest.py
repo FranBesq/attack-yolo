@@ -16,7 +16,8 @@ def main():
 
     state, reward, done, info = env.step(imgAdv)
 
-    print("Reward given from Env = " + str(reward))
+    print("\nObservation shape is: " + str(state.shape))
+    print("\nReward given from Env = " + str(reward))
 
 if __name__ == "__main__":
   main()
