@@ -9,7 +9,7 @@ from PIL import Image
 
 def main():
 
-    env = attackEnv.AttackEnv()
+    env = attackEnv.AttackEnv(normActions=False)#Actions normalized by .utils
     
     #Get random image as action
     imgAdv = utils.getRandomImg(width=64, height=64, save=True)

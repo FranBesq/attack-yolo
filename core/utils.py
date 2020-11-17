@@ -10,7 +10,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 img_path = "/home/francisco/Documents/PIC/attack-yolo/img/"
 
 # Returns random image of given size
-def getRandomImg(width=32, height=32, imgName="adv_img.jpg", save=False):
+def getRandomImg(width=32, height=32, norm=True,imgName="adv_img.jpg", save=False):
     
     img_adv = np.ones((width, height, 3), dtype=np.uint8)
     bgr = cv2.split(img_adv)
@@ -18,15 +18,27 @@ def getRandomImg(width=32, height=32, imgName="adv_img.jpg", save=False):
     cv2.randu(bgr[1], 0, 255)
     cv2.randu(bgr[2], 0, 255)
     img_adv = cv2.merge(bgr)
+
+    if norm is True:
+        normalizedImg = np.zeros((height, width))
+        normalizedImg = cv2.normalize(img_adv, normalizedImg, 0, 255, cv2.NORM_MINMAX)
+        img_adv = normalizedImg
+
     if save == True:
         cv2.imwrite(img_path + imgName, img_adv)
     
     return img_adv
 
-def mergeImages(imgBack, imgOver, offsetH=150, offsetW=150, save=True, saveName="result.jpg"):
+def mergeImages(imgBack, imgOver, offsetH=150, offsetW=150, save=True, normBack=False,saveName="result.jpg"):
     
     overShape = imgOver.shape[:2]
     #Check if offset + sizeOver out of bounds??
+
+    #Assume imgOver is normalized, so we normalize ImgBack only
+    if normBack is True:
+        normalizedImg = np.zeros((imgBack.shape[0], imgBack.shape[1]))
+        normalizedImg = cv2.normalize(imgBack, normalizedImg, 0, 255, cv2.NORM_MINMAX)
+        imgBack = normalizedImg
 
     # Copy imgOver on top of imgBack given an offset
     imgBack[offsetH:offsetH+overShape[0], offsetW:offsetW+overShape[1]] = imgOver
