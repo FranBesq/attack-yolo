@@ -12,7 +12,10 @@ Developing adversarial attacks on YOLO algorithm for computer vision
 
 * NumPy
 
+* OpenAI Gym
+
+* Stable Baselines
+
 # Work in progress
 
-* Create an Env to generate adversarial images
-* Fix test
+* Optimize for GPU
