@@ -8,8 +8,8 @@ from gym import spaces
 HEIGHT = 416
 WIDTH = 416
 #Patch size
-ACTION_H = 64
-ACTION_W = 64
+ACTION_H = 32
+ACTION_W = 96
 
 class AttackEnv(gym.Env):
   """Custom Environment for performing adversarial attacks on cnns that follows gym interface"""
@@ -24,6 +24,7 @@ class AttackEnv(gym.Env):
     self.deceiveClass = True
     self.desiredClass = "ntraffic light"
     self.normActionSpace = True
+    self.doubleMerge = True
     #Set to false if using AttackEnvTest
     if normActions == False:
       self.normActions = False
@@ -61,7 +62,11 @@ class AttackEnv(gym.Env):
         action = normalizedImg
 
     #Consider the overlay the action
-    utils.mergeImages(imgOr, action, normBack=True)
+    imgBack = utils.mergeImages(imgOr, action, normBack=True)
+    #Do we use same sticker twice?
+    if self.doubleMerge:
+      utils.mergeImages(imgBack, action, normBack=True, offsetH=232, offsetW=150)
+
     res = utils.detectYolo()
 
     #Compute reward

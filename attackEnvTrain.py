@@ -21,9 +21,8 @@ if __name__ == '__main__':
     #n_actions = env.action_space.shape[-1]
     #action_noise = NormalActionNoise(mean=np.zeros(n_actions), sigma=0.1 * np.ones(n_actions))
 
-
-    model = SAC(CnnPolicy, env, verbose=1)
-    model.learn(total_timesteps=1000, log_interval=20)
+    model = SAC(CnnPolicy, env, verbose=1, learning_rate=0.1)
+    model.learn(total_timesteps=1000, log_interval=50)
     model.save("SAC_attack_model")
 
     del model # remove to demonstrate saving and loading
@@ -35,5 +34,6 @@ if __name__ == '__main__':
     while True:
         action, _states = model.predict(obs)
         obs, rewards, dones, info = env.step(action)
+        print(str(obs.shape))
         #env.render()
         #env.save_running_average(log_dir)
