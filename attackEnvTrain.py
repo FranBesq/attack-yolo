@@ -16,6 +16,7 @@ if __name__ == '__main__':
     #num_cpu = 2
     env = attackEnv.AttackEnv()
     env = DummyVecEnv([lambda: env])
+    env = VecCheckNan(env, raise_exception=True)
     #env = VecNormalize(env, norm_obs=True, norm_reward=False)
 
     #n_actions = env.action_space.shape[-1]
