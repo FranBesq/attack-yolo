@@ -10,9 +10,9 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 img_path = "/home/francisco/Documents/PIC/attack-yolo/img/"
 
 # Returns random image of given size
-def getRandomImg(width=32, height=32, norm=True,imgName="adv_img.jpg", save=False):
+def getRandomImg(height=32, width=32, norm=True,imgName="adv_img.jpg", save=False):
     
-    img_adv = np.ones((width, height, 3), dtype=np.uint8)
+    img_adv = np.ones((height, width, 3), dtype=np.uint8)
     bgr = cv2.split(img_adv)
     cv2.randu(bgr[0], 0, 255)
     cv2.randu(bgr[1], 0, 255)
@@ -20,7 +20,7 @@ def getRandomImg(width=32, height=32, norm=True,imgName="adv_img.jpg", save=Fals
     img_adv = cv2.merge(bgr)
 
     if norm is True:
-        normalizedImg = np.zeros((height, width))
+        normalizedImg = np.zeros((width, height))
         normalizedImg = cv2.normalize(img_adv, normalizedImg, 0, 255, cv2.NORM_MINMAX)
         img_adv = normalizedImg
 

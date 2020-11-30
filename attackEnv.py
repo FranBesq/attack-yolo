@@ -8,7 +8,7 @@ from gym import spaces
 HEIGHT = 416
 WIDTH = 416
 #Patch size
-ACTION_H = 32
+ACTION_H = 52
 ACTION_W = 96
 
 class AttackEnv(gym.Env):
@@ -19,12 +19,12 @@ class AttackEnv(gym.Env):
 
     #Anyway, its hardcoded in self._get_obs()
     self.imgDir = "img/",
-    self.imgName = "senal-stop-416x2.jpg"
-    self.targetClass = "nstop sign"
+    self.imgName = "pp-416x2.jpg"
+    self.targetClass = "nperson"
     self.deceiveClass = True
-    self.desiredClass = "ntraffic light"
+    self.desiredClass = "ndonut"
     self.normActionSpace = True
-    self.doubleMerge = True
+    self.doubleMerge = False
     #Set to false if using AttackEnvTest
     if normActions == False:
       self.normActions = False
@@ -62,10 +62,10 @@ class AttackEnv(gym.Env):
         action = normalizedImg
 
     #Consider the overlay the action
-    imgBack = utils.mergeImages(imgOr, action, normBack=True)
+    imgBack = utils.mergeImages(imgOr, action, normBack=True, offsetH=210, offsetW=158)
     #Do we use same sticker twice?
     if self.doubleMerge:
-      utils.mergeImages(imgBack, action, normBack=True, offsetH=232, offsetW=150)
+      utils.mergeImages(imgBack, action, normBack=True)#, offsetH=210, offsetW=158)
 
     res = utils.detectYolo()
 
@@ -104,4 +104,4 @@ class AttackEnv(gym.Env):
     ...
 
   def _get_obs(self):
-    return cv2.imread("img/senal-stop-416x2.jpg") #Remove this hardcoded path
+    return cv2.imread("img/pp-416x2.jpg") #Remove this hardcoded path
