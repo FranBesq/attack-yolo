@@ -5,7 +5,7 @@ import numpy as np
 #from stable_baselines.td3.policies import CnnPolicy
 from stable_baselines.sac.policies import CnnPolicy
 #from stable_baselines.common.policies import CnnPolicy
-from stable_baselines.common.vec_env import DummyVecEnv, VecNormalize
+from stable_baselines.common.vec_env import DummyVecEnv, VecNormalize, VecCheckNan
 from stable_baselines.ddpg.noise import NormalActionNoise, OrnsteinUhlenbeckActionNoise
 from stable_baselines import TD3, A2C, PPO1, PPO2, SAC
 
